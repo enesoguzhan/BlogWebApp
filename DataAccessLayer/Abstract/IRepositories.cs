@@ -10,14 +10,8 @@ namespace DataAccessLayer.Abstract
     // where TEntity : class => TEntity tipinin dinamik bir class olacağını belirtip kısıtlıyoruz.
     public interface IRepositories<TEntity> where TEntity : class
     {
-        public string Insert(TEntity entity)
-        {
-            return "";
-        }
-        public string Update(TEntity entity)
-        {
-            return "";
-        }
+        public string Insert(TEntity entity);
+        public string Update(TEntity entity);       
         public string Delete(Expression<Func<TEntity, bool>> where);
         public IList<TEntity> GetAllList(params Expression<Func<TEntity, object>>[] inculude);
         public TEntity GetById(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] inculude);

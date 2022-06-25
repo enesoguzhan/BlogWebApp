@@ -11,7 +11,7 @@ namespace DataAccessLayer.Models
         public int Id { get; set; }
         public int BlogId { get; set; }
         public bool InteractionType { get; set; } // True ise Like, False ise Dislike olacak
-        public DateOnly InteractionDate { get; set; }
+        public DateTime InteractionDate { get; set; }
         public string IPAddress { get; set; }
         public Blogs Blogs { get; set; }
     }

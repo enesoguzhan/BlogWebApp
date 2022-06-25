@@ -19,7 +19,7 @@ namespace DataAccessLayer.Concrete
         //Veri bağlantımızı yöneten bir metetdur. Bu metot polymorphism yöntemini kullanılarak base sınıf metot alt sınıfta değiştirilerek kullanılır.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-58;Database=WebBlog;Trusted_Connection=True");
         }
 
         //Hangi sınıfların tablo yapılarındaki propertyleri yöneteceğini belitrriğimiz metot. Bu metot polymorphism yöntemini kullanılarak base sınıf metot alt sınıfta değiştirilerek kullanılır.
