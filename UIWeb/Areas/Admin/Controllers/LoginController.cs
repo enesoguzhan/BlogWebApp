@@ -1,11 +1,13 @@
 ﻿using BusinessLayer.Abstract;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace UIWeb.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         private readonly IUserService service;
@@ -34,10 +36,19 @@ namespace UIWeb.Areas.Admin.Controllers
                     new Claim(ClaimTypes.Name, userInfo.NameSurname),
                     new Claim(ClaimTypes.Role, "admin"),
                     new Claim("Id", userInfo.Id.ToString()),
-                };
+                };              
                 var UserIdentity = new ClaimsIdentity(claims,"UserLogin");
                 ClaimsPrincipal principal = new ClaimsPrincipal(UserIdentity);
-                HttpContext.SignInAsync(principal);
+
+                // Tarayıcı açılıp kapandığında belirlenen süre kadar cookie saklanıyor.
+                var CookieSuresi = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.Now.AddMinutes(58),
+                    IsPersistent = true,
+                    AllowRefresh = true
+                };
+
+                HttpContext.SignInAsync(principal,CookieSuresi);
                 return Redirect("/admin/Blogs");
             }
             else

@@ -1,0 +1,55 @@
+﻿@model DataAccessLayer.Models.Comments
+<script src="/jquery-validate/jquery.validate.min.js"></script>
+<script src="/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#">Admin Panel</a></li>
+		<li class="breadcrumb-item"><a href="/admin/Blogs">Bloglar</a></li>
+		<li class="breadcrumb-item"><a href="/admin/Comments/@Model.BlogId">Yorumlar</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Yorum Düzenle</li>
+	</ol>
+</nav>
+
+
+<form action="/admin/Comments/Update/@Model.Id" method="post">
+
+	<div class="form-control" style="margin-bottom:10px;">
+		<div style="margin-top:5px;margin-bottom:5px;">
+
+			<input type="text" value="@Model.BlogId" asp-for="BlogId" hidden />
+
+			<input type="text" asp-for="Commenter" value="@Model.Commenter" class="form-control" style="margin-bottom:15px">
+			<span asp-validation-for="Commenter"></span>
+			<input type="text" asp-for="Explanation" value="@Model.Explanation" class="form-control" style="margin-bottom:15px">
+			<span asp-validation-for="Explanation"></span>
+			<input type="date" asp-for="CommentDate" value="@Model.CommentDate.ToString("yyyy-MM-dd")" class="form-control" style="margin-bottom:15px">
+			<span asp-validation-for="CommentDate"></span>
+			<input type="text" asp-for="Email" value="@Model.Email" class="form-control" style="margin-bottom:15px">
+			<span asp-validation-for="Email"></span>
+			<select asp-for="Status" class="form-control" style="margin-bottom:10px;">
+				@if (Model.Status)
+				{
+					<option value="True">Aktif</option>
+					<option value="False">Pasif</option>
+				}
+				else
+				{
+					<option value="False">Pasif</option>
+					<option value="True">Aktif</option>
+				}
+			</select>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-primary right">Güncelle</button>
+	<a href="/admin/Comments/@Model.BlogId" class="btn btn-warning">Vazgeç</a>
+</form>
+
+@if (ViewBag.Error != null)
+{
+	<div class="alert alert-danger" style="margin-top:25px;">@ViewBag.Error</div>
+}
+@if (ViewBag.Messages != null)
+{
+	<div class="alert alert-success" style="margin-top:25px;">@ViewBag.Messages</div>
+}

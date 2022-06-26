@@ -1,0 +1,52 @@
+﻿@model DataAccessLayer.Models.Blogs
+<script src="/jquery-validate/jquery.validate.min.js"></script>
+<script src="/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#">Admin Panel</a></li>
+		<li class="breadcrumb-item"><a href="/admin/Blogs">Bloglar</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Blog Düzenle</li>
+	</ol>
+</nav>
+
+
+<form action="/admin/blogs/Update/@Model.Id" method="post" enctype="multipart/form-data">
+	<input type="text" name="Images" value="@Model.Images" hidden />
+	<input type="text" name="UsersId" value="@Model.UsersId" hidden />
+	<div class="form-control" style="margin-bottom:10px;">
+		<div style="margin-top:5px;margin-bottom:5px;">
+			<img src="~/images//@Model.Images" width="250" />
+
+			<input type="file" name="file" class="form-control" style="margin-bottom:10px;margin-top:10px;" />
+
+			<input type="text" asp-for="Name" class="form-control" style="margin-bottom:10px;" placeholder="Blog Adı" value="@Model.Name" />
+			<span asp-validation-for="Name"></span>
+
+			<textarea type="text" asp-for="Explanation" class="form-control" style="margin-bottom:10px;">@Model.Explanation</textarea>
+			<span asp-validation-for="Explanation"></span>
+
+			<input type="date" asp-for="PublishDate" class="form-control" style="margin-top:10px;margin-bottom:10px;" placeholder="Bir Tarih Seçiniz" value="@Model.PublishDate.ToString("yyyy-MM-dd")" />
+			<span asp-validation-for="PublishDate"></span>
+
+			<select name="Status" class="form-control" style="margin-top:10px;margin-bottom:10px;">
+				<option value="true">Aktif</option>
+				<option value="false">Pasif</option>
+			</select>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-primary right">Güncelle</button>
+	<a href="/admin/blogs" class="btn btn-warning">Vazgeç</a>
+</form>
+@if (ViewBag.Error != null)
+{
+	<div class="alert alert-danger" style="margin-top:25px;">@ViewBag.Error</div>
+}
+@if (ViewBag.Messages != null)
+{
+	<div class="alert alert-success" style="margin-top:25px;">@ViewBag.Messages</div>
+}
+
+<script>
+	CKEDITOR.replace('Explanation');
+</script>

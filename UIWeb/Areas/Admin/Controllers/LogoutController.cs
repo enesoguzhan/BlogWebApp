@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UIWeb.Areas.Admin.Controllers
 {
+	[Area("Admin")]
     public class LogoutController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            HttpContext.SignOutAsync();
+            return Redirect("/admin/Login");
         }
     }
 }

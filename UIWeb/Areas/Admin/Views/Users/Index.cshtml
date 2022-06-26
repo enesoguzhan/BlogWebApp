@@ -1,0 +1,32 @@
+﻿<a href="/admin/Users/Insert" style="margin-top:15px;margin-bottom:15px;" class="btn btn-primary">Yeni</a>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Adı Soyadı</th>
+			<th>Email</th>
+			<th>Kısa Açıklama</th>
+			<th>İşlemler</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@item.Id</td>
+				<td>@item.NameSurname</td>
+				<td>@item.Email</td>
+				<td>@item.Summary</td>
+				<td>
+					<a class="btn btn-primary" href="/admin/Users/Update/@item.Id">Düzenle</a>
+					<a class="btn btn-danger" href="/admin/Users/Delete/@item.Id">Sil</a>
+				
+				</td>
+			</tr>
+		}
+
+	</tbody>
+
+
+</table>

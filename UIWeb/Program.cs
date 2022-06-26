@@ -1,8 +1,11 @@
 using BusinessLayer.Ioc;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddMvc();
+builder.Services.AddMvc().AddFluentValidation();
 builder.Services.MyService();
 /* 
  Giriþ Yapýlacak Olan Controller Hangisi ?
@@ -10,18 +13,26 @@ builder.Services.MyService();
 kullanýýcý sisteme giriþ yaptýðýnda ne kadar süre oturum açýk kalýcak
  */
 builder.Services.AddAuthentication(
-    CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(s =>
+    CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
     {
-        s.LoginPath = "/admin/login"; // Giriþ iþlemi yapýlacak controller
-        s.LogoutPath = "/admin/logout"; // Çýkýþ iþlemi yapýcak controller
-        s.AccessDeniedPath = "/YetkisizGiris"; // Yetkisi olmayan giriþ yapýldýðýnda
-        s.ExpireTimeSpan = TimeSpan.FromHours(1); // Giriþ geçerlilik süresi
-        s.SlidingExpiration = true; // Pencere kapatýldýðýnda 
+        x.LoginPath = "/admin/Login";
+        x.LogoutPath = "/admin/Logout";
+        x.AccessDeniedPath = "/YetkisizGiris";
     });
+
+// Bütün Sayfalara Yasak Koyma
+builder.Services.AddControllersWithViews(x =>
+{
+    var Dogrulama = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    x.Filters.Add(new AuthorizeFilter(Dogrulama));
+
+});
+
 
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseEndpoints(s =>
 {
     s.MapDefaultControllerRoute();
