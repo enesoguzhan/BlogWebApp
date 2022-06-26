@@ -27,14 +27,15 @@ namespace UIWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Insert(Blogs blogs, IFormFile file)
         {
+            blogs.UsersId = 1;
             if (file != null)
             {
-                string dosyaUzanti = Path.GetExtension(file.Name);
+                string dosyaUzanti = Path.GetExtension(file.FileName);
                 string[] uzantilar = { ".jpg", ".jpeg", ".png" };
                 if (uzantilar.Contains(dosyaUzanti))
                 {
                     string rastgele = Guid.NewGuid() + dosyaUzanti;
-                    string kayitYolu = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images{rastgele}");
+                    string kayitYolu = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{rastgele}");
                     using (var Stream = new FileStream(kayitYolu, FileMode.Create))
                     {
                         file.CopyTo(Stream);
@@ -69,12 +70,12 @@ namespace UIWeb.Areas.Admin.Controllers
             blogs.Id = id;
             if (file != null)
             {
-                string dosyaUzanti = Path.GetExtension(file.Name);
+                string dosyaUzanti = Path.GetExtension(file.FileName);
                 string[] uzantilar = { ".jpg", ".jpeg", ".png" };
                 if (uzantilar.Contains(dosyaUzanti))
                 {
                     string rastgele = Guid.NewGuid() + dosyaUzanti;
-                    string kayitYolu = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images{rastgele}");
+                    string kayitYolu = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{rastgele}");
                     using (var Stream = new FileStream(kayitYolu, FileMode.Create))
                     {
                         file.CopyTo(Stream);

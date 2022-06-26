@@ -13,13 +13,13 @@ namespace UIWeb.Areas.Admin.Controllers
         }
 
         [Route("/admin/Interactions/{blogId}")]
-        [HttpGet]
-        public IActionResult Index()
+       // [HttpGet]
+        public IActionResult Index(int blogId)
         {
-            return View();
+            return View(service.GetAllList(s => s.Blogs).Where(s => s.BlogId == blogId));
         }
 
-        [Route("/admin/Interactions/{Id}")]
+        [Route("/admin/Interactions/Delete/{Id}")]
         [HttpGet]
         public IActionResult Delete(int id)
         {

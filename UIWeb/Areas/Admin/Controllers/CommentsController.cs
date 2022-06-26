@@ -17,17 +17,17 @@ namespace UIWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int blogId)
         {
-            return View(service.GetAllList().Where(s => s.BlogId == blogId));
+            return View(service.GetAllList(s=>s.Blogs).Where(s => s.BlogId == blogId));
         }
 
-        [Route("/admin/Update/{Id}")]
+        [Route("/admin/Comments/Update/{Id}")]
         [HttpGet]
         public IActionResult Update(int id)
         {
             return View(service.GetById(s => s.Id == id));
         }
 
-        [Route("/admin/Update/{Id}")]
+        [Route("/admin/Comments/Update/{Id}")]
         [HttpPost]
         public IActionResult Update(int id, Comments comments)
         {
@@ -35,7 +35,7 @@ namespace UIWeb.Areas.Admin.Controllers
             ViewBag.Messages = service.Update(comments);
             return View(service.GetById(s => s.Id == id));
         }
-        [Route("/admin/Delete/{Id}")]
+        [Route("/admin/Comments/Delete/{Id}")]
         [HttpGet]
         public IActionResult Delete(int id)
         {

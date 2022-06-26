@@ -1,0 +1,37 @@
+﻿
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#">Admin Panel</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Bloglar</li>
+	</ol>
+</nav>
+
+<a href="/admin/Blogs/Insert" style="margin-top:15px;margin-bottom:15px;" class="btn btn-primary">Yeni</a>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Blog</th>
+			<th>Paylaşım Tarihi</th>
+			<th>Durumu</th>
+			<th>İşlemler</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@item.Id</td>
+				<td>@item.Name</td>
+				<td>@item.PublishDate</td>
+				<td>@(item.Status == true ? "Aktif" : "Pasif")</td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="/admin/blogs/Update/@item.Id">Düzenle</a>
+					<a class="btn btn-sm btn-danger" href="/admin/blogs/Delete/@item.Id">Sil</a>
+					<a class="btn btn-sm btn-warning" href="/admin/Comments/@item.Id">Yorumlar</a>
+					<a class="btn btn-sm btn-success" href="/admin/Interactions/@item.Id">Etkileşimler</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
