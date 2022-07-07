@@ -10,11 +10,11 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
-			<th>ID</th>
+			<th style="width:5%">ID</th>
 			<th>Blog</th>
-			<th>Paylaşım Tarihi</th>
-			<th>Durumu</th>
-			<th>İşlemler</th>
+			<th style="width:15%">Paylaşım Tarihi</th>
+			<th style="width:10%">Durumu</th>
+			<th style="width:24%">İşlemler</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,7 +24,14 @@
 				<td>@item.Id</td>
 				<td>@item.Name</td>
 				<td>@item.PublishDate</td>
-				<td>@(item.Status == true ? "Aktif" : "Pasif")</td>
+				@if (item.Status)
+				{
+					<td><label style="color:green">Aktif</label></td>
+				}
+				else
+				{
+					<td><label style="color:red">Pasif</label></td>
+				}
 				<td>
 					<a class="btn btn-sm btn-primary" href="/admin/blogs/Update/@item.Id">Düzenle</a>
 					<a class="btn btn-sm btn-danger" href="/admin/blogs/Delete/@item.Id">Sil</a>
